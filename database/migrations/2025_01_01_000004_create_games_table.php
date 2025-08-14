@@ -17,12 +17,14 @@ return new class extends Migration {
             $table->string('category')->nullable(); // mobile, pc, console
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
-            $table->integer('sort_order')->default(0);
+            $table->unsignedInteger('sort_order')->default(0);
+            $table->unsignedBigInteger('view_count')->default(0)->after('sort_order');
             $table->json('metadata')->nullable();
             $table->timestamps();
 
-            $table->index(['slug', 'is_active']);
-            $table->index('sort_order');
+            // Indexes
+            $table->index(['is_active', 'sort_order']);
+            $table->index('category');
         });
     }
 

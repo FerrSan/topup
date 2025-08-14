@@ -35,13 +35,18 @@
                         <span>Check Invoice</span>
                     </Link>
                     
-                    <template v-if="$page.props.auth.user">
+                    <template v-if="user">
                         <!-- User Dropdown -->
                         <Dropdown>
                             <template #trigger>
                                 <button class="flex items-center space-x-2 px-4 py-2 bg-zinc-900/60 rounded-xl hover:bg-zinc-900 transition">
-                                    <img :src="$page.props.auth.user.avatar_url" alt="Avatar" class="w-8 h-8 rounded-lg">
-                                    <span class="text-white">{{ $page.props.auth.user.name }}</span>
+                                    <img 
+                                        :src="user.avatar_url || '/images/default-avatar.png'" 
+                                        :alt="user.name" 
+                                        class="w-8 h-8 rounded-lg"
+                                        @error="handleAvatarError"
+                                    >
+                                    <span class="text-white">{{ user.name }}</span>
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                     </svg>
@@ -68,17 +73,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Link, router } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 
+const page = usePage();
 const searchQuery = ref('');
+
+// Computed property untuk safe access ke user
+const user = computed(() => {
+    return page.props?.auth?.user || null;
+});
 
 const search = () => {
     if (searchQuery.value) {
         router.get(route('games.search'), { q: searchQuery.value });
     }
+};
+
+const handleAvatarError = (e) => {
+    e.target.src = '/images/default-avatar.png';
 };
 </script>

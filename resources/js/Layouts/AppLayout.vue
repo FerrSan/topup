@@ -1,8 +1,5 @@
 <template>
-    <div class="min-h-screen bg-dark-bg text-gray-100">
-        <Head :title="title" />
-        
-        <!-- Navbar -->
+    <div class="min-h-screen bg-dark-bg">
         <Navbar />
         
         <!-- Main Content -->
@@ -19,26 +16,18 @@
                         <h3 class="text-white font-semibold mb-4">About Us</h3>
                         <p class="text-gray-400 text-sm">Platform top-up game terpercaya dengan proses otomatis 24/7. Aman, cepat, dan terjamin.</p>
                     </div>
-                    
+
                     <!-- Quick Links -->
                     <div>
                         <h3 class="text-white font-semibold mb-4">Quick Links</h3>
                         <ul class="space-y-2">
-                            <li>
-                                <Link :href="route('games.index')" class="text-gray-400 hover:text-white text-sm">All Games</Link>
-                            </li>
-                            <li>
-                                <Link :href="route('invoice.check')" class="text-gray-400 hover:text-white text-sm">Check Invoice</Link>
-                            </li>
-                            <li>
-                                <a href="#" class="text-gray-400 hover:text-white text-sm">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-gray-400 hover:text-white text-sm">Contact</a>
-                            </li>
+                            <li><Link :href="route('games.index')" class="text-gray-400 hover:text-white text-sm">All Games</Link></li>
+                            <li><Link :href="route('invoice.check')" class="text-gray-400 hover:text-white text-sm">Check Invoice</Link></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Contact</a></li>
                         </ul>
                     </div>
-                    
+
                     <!-- Payment Methods -->
                     <div>
                         <h3 class="text-white font-semibold mb-4">Payment Methods</h3>
@@ -63,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Contact -->
                     <div>
                         <h3 class="text-white font-semibold mb-4">Contact Us</h3>
@@ -83,7 +72,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="mt-8 pt-8 border-t border-white/10 text-center text-gray-400 text-sm">
                     <p>&copy; 2024 TopUpGame. All rights reserved.</p>
                 </div>
@@ -93,11 +82,6 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import Navbar from '@/Components/Navbar.vue';
-
-defineProps({
-    title: String,
-});
 </script>
-

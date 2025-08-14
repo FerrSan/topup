@@ -12,13 +12,14 @@ class Game extends Model
 
     protected $fillable = [
         'name','slug','publisher','icon_url','description',
-        'category','is_active','is_featured','sort_order','metadata',
+        'category','is_active','is_featured','sort_order','metadata','view_count'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
         'metadata' => 'array',
+        'view_count' => 'integer',
     ];
 
     // --- Routing by slug ---

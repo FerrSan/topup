@@ -1,4 +1,6 @@
 <?php
+// app/Http/Controllers/InvoiceController.php - UPDATE
+
 namespace App\Http\Controllers;
 
 use App\Models\Order;
@@ -9,7 +11,19 @@ class InvoiceController extends Controller
 {
     public function check()
     {
-        return Inertia::render('Invoice/Check');
+        $recentOrders = [];
+        
+        if (auth()->check()) {
+            $recentOrders = Order::where('user_id', auth()->id())
+                ->with(['game', 'product'])
+                ->latest()
+                ->limit(5)
+                ->get();
+        }
+
+        return Inertia::render('Invoice/Check', [
+            'recentOrders' => $recentOrders
+        ]);
     }
 
     public function show($invoiceNo)

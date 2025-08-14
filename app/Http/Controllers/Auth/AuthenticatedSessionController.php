@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/Auth/AuthenticatedSessionController.php - UPDATE
 
 namespace App\Http\Controllers\Auth;
 
@@ -30,9 +31,16 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
+        $user = Auth::user();
+
+        // Redirect berdasarkan role
+        if ($user->hasRole('admin') || $user->hasRole('super-admin')) {
+            return redirect()->intended('/admin');
+        }
+
+        // User biasa ke dashboard
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -42,9 +50,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');
